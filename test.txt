@@ -1,1 +1,1 @@
-Arquivo de texto simples para teste.
+Arquivo de texto simples para teste do código.
