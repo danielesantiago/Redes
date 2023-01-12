@@ -29,53 +29,48 @@ public class Cliente {
     }
 
     public static void sendFile() throws IOException {
-    Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
-    try (Socket socket = new Socket("localhost", 1238)) {
-        // Solicita o nome do arquivo a ser enviado
-        System.out.print("Informe o nome do arquivo para enviar: ");
-        String fileName =   sc.nextLine();
-        fileName = caminho + fileName;
+        try (Socket socket = new Socket("localhost", 1238)) {
+
+            System.out.print("Informe o nome do arquivo para enviar: ");
+            String fileName =   sc.nextLine();
+            fileName = caminho + fileName;
+            File file = new File(fileName);
+
+            if (!file.exists()) {
+                System.out.println("Arquivo não encontrado");
+                return;
+            }
+           
+            OutputStream os = socket.getOutputStream();
+            os.write(("enviar " + fileName ).getBytes()); // envia a operação e o nome do arquivo
+            os.flush();
+
+            BufferedOutputStream bos = new BufferedOutputStream(socket.getOutputStream());
+            FileInputStream fis = new FileInputStream(file);
+
+            int bytes;
+            byte[] buffer = new byte[1024];
+
+            while ((bytes = fis.read(buffer)) > 0) {
+                bos.write(buffer, 0, bytes);
+            }
+            bos.flush();
 
 
-        // Verifica se o arquivo existe
-        File file = new File(fileName);
-        if (!file.exists()) {
-            System.out.println("Arquivo não encontrado");
-            return;
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            String response = in.readLine();
+            System.out.println(response);
+
+            fis.close();
+            os.close();
+            socket.close();
+        } catch (ConnectException e) {
+            System.out.println("Não foi possível conectar ao servidor.");
         }
-        
-        fileName = "send " + fileName;
-
-        // Envia o arquivo
-        byte[] buffer = new byte[1024];
-        FileInputStream fis = new FileInputStream(file);
-        BufferedInputStream bis = new BufferedInputStream(fis);
-        OutputStream os = socket.getOutputStream();
-        int bytes;
-        while ((bytes = bis.read(buffer)) > 0) {
-            os.write((fileName).getBytes());
-        }
-        os.flush();
-
-        // Recebe a resposta do servidor
-        InputStream is = socket.getInputStream();
-        String response = new BufferedReader(new InputStreamReader(is)).readLine();
-        
-
-        // Exibe a resposta do servidor
-        System.out.println(response);
-
-        // Fecha os streams e o socket
-        fis.close();
-        bis.close();
-        os.close();
-        is.close();
-        socket.close();
-    } catch (ConnectException e) {
-        System.out.println("Não foi possível conectar ao servidor.");
     }
-}
+    
 
 
     public static void receiveFile() throws IOException {

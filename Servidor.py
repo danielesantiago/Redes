@@ -19,17 +19,20 @@ def handle_client(client_socket):
         print(file_name)
 
         
-        if operation == "send":
-            # Recebe o arquivo e o salva em disco
-            with open(file_name, 'r') as arquivo_existente, open(os.path.join(path,'RecebidoServidor\\' + nome_arquivo), 'w') as file_received:
-                for linha in arquivo_existente.readlines():
-                    file_received.write(linha)
+        if operation == "enviar":
+            file_path = os.path.join(path,'RecebidoServidor\\' + nome_arquivo)
 
-            arquivo_existente.close()
-            file_received.close()
+            conteudo = client_socket.recv(1024).decode()
 
-            # Envia uma confirmação para o cliente
+            with open(file_path, "wb") as f:
+                f.write(conteudo.encode())
+            f.close()
+
+            print("Arquivo recebido com sucesso")
             client_socket.send("Arquivo recebido com sucesso\n".encode())
+            
+
+
         elif operation == "receive":
             try:
                 # Lê o arquivo e o envia de volta para o cliente
