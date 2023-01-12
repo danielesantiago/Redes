@@ -2,8 +2,8 @@
 Implementação de um Socket para a disciplina de Redes
 
 Integrantes do grupo:
-* Daniele Santiago
 * Ana Beatriz
+* Daniele Santiago
 
 ## Objetivos e Requisitos
 Desenvolver um servidor usando a tecnologia Socket que seja capaz de:
