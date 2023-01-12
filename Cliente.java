@@ -54,13 +54,13 @@ public class Cliente {
             byte[] buffer = new byte[1024];
 
             while ((bytes = fis.read(buffer)) > 0) {
-                bos.write(buffer, 0, bytes);
+                bos.write(buffer, 0, bytes); // envia os bytes do arquivo
             }
             bos.flush();
 
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String response = in.readLine();
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // recebe a resposta do servidor
+            String response = in.readLine(); 
             System.out.println(response);
 
             fis.close();
@@ -81,7 +81,7 @@ public class Cliente {
         // Envia o nome do arquivo para o servidor
         System.out.print("Informe o nome do arquivo para receber: ");
         String nome = sc.nextLine();
-        String fileName = "receive " + nome;
+        String fileName = "receber " + nome;
         OutputStream os = socket.getOutputStream();
         os.write(fileName.getBytes());
 
