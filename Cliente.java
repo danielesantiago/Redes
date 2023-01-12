@@ -31,7 +31,7 @@ public class Cliente {
     public static void sendFile() throws IOException {
         Scanner sc = new Scanner(System.in);
 
-        try (Socket socket = new Socket("localhost", 1238)) {
+        try (Socket socket = new Socket("DESKTOP-Q5Q1Q6F",1238)) {
 
             System.out.print("Informe o nome do arquivo para enviar: ");
             String fileName =   sc.nextLine();
@@ -77,7 +77,7 @@ public class Cliente {
     Scanner sc = new Scanner(System.in);
     
     // Conecta ao servidor e solicita o arquivo
-    try (Socket socket = new Socket("localhost", 1238)) {
+    try (Socket socket = new Socket("DESKTOP-Q5Q1Q6F", 1238)) {
         // Envia o nome do arquivo para o servidor
         System.out.print("Informe o nome do arquivo para receber: ");
         String nome = sc.nextLine();
