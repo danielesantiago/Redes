@@ -1,3 +1,7 @@
+// Implementação do Cliente
+// Nomes: Ana Beatriz Juvencio - 801817, Daniele Pereira Santiago - 792175
+
+
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;

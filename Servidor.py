@@ -1,3 +1,10 @@
+'''
+Implementação do servidor
+Nomes: Ana Beatriz Juvencio - 801817, Daniele Pereira Santiago - 792175
+
+'''
+
+
 import os
 import socket
 import threading
